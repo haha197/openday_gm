@@ -241,7 +241,7 @@
   </head>
 
   <body>
-    <video id="input_video" style="display: none"></video>
+    <img id="input_stream" src="http://localhost:3000/video_feed" style="display: none">
     <canvas id="output_canvas" width="256" height="172"></canvas>
     <div id="output"></div>
     <div id="game-info">
@@ -397,7 +397,20 @@
         width: 640,
         height: 480,
       });
-      camera.start();
+      // 取代原本的 camera.start()
+      let imageElement = document.getElementById('input_stream')
+      function streamToMediaPipe() {
+        if (imageElement.complete && imageElement.naturalWidth !== 0) {
+          // 將圖片傳送給 MediaPipe 處理
+          hands.send({ image: imageElement });
+        }
+        requestAnimationFrame(streamToMediaPipe);
+      }
+      
+      // 當圖片加載完成後開始
+      imageElement.onload = () => {
+        streamToMediaPipe();
+      };
       const fruits = ['🐡', '🐠', '🐟', '🏊‍♂️'];
       let players = [
         { id: 1, name: '你', deck: [], pile: [], isOut: false },
