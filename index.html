@@ -693,22 +693,24 @@
       const allAIsOut = aiPlayers.every((p) => p.isOut);
       // 檢查玩家 (你) 是否出局
       const playerOut = players[0].isOut;
-
+    
       if (allAIsOut) {
         gameActive = false;
+        imageElement.src="";
         setTimeout(() => {
           alert('太強了！你擊敗了所有 AI，成為最終贏家！');
           location.reload();
-        }, 500);
+        }, 3000);
         return;
       }
 
       if (playerOut) {
         gameActive = false;
+        imageElement.src="";
         setTimeout(() => {
           alert('你已經沒有手牌了，遊戲結束！');
           location.reload();
-        }, 500);
+        }, 3000);
         return;
       }
     }
